@@ -6,9 +6,11 @@ from .models import Sponsor, TechSession
 def index(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
+    gold = Sponsor.objects.filter(level='Gold')
     keynote_session = TechSession.objects.filter(session_type='Keynote')
     sponsor_session = TechSession.objects.filter(session_type='Sponsor')
     context = {'index_current': 'current', 'diamond': diamond, 'sapphire': sapphire,
+               'gold': gold,
                'keynote': keynote_session, 'sponsor': sponsor_session}
     return render(request, 'index.html', context)
 
@@ -21,8 +23,9 @@ def about(request):
 def sponsors(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
-
-    context = {'sponsor_current': 'current', 'diamond': diamond, 'sapphire': sapphire}
+    gold = Sponsor.objects.filter(level='Gold')
+    context = {'sponsor_current': 'current', 'diamond': diamond, 'sapphire': sapphire,
+               'gold': gold}
     return render(request, 'sponsors.html', context)
 
 
