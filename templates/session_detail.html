@@ -1,4 +1,5 @@
 {%  extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <!--Page Title-->
@@ -20,7 +21,11 @@
         <div class="row">
             <div class="image-column col-lg-4 col-md-12 col-sm-12">
                 <div class="image-box">
+                    {% if session.speaker.profile_img %}
                     <figure class="image"><img src="{{ session.speaker.profile_img.url }}" alt=""></figure>
+                    {% else %}
+                    <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                    {% endif %}
                     <ul class="social-icon-two social-icon-colored text-center">
                         {% if session.speaker.facebook != '' %}
                         <li><a href="https://www.facebook.com/openinfradev"><i class="fa fa-facebook-f fa-2x"></i></a></li>
