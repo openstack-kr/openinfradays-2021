@@ -1,0 +1,62 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+<!--Page Title-->
+<section class="page-title">
+    <div class="auto-container">
+        <h1 style="color: #000000">후원사의 밤</h1>
+    </div>
+</section>
+<!--End Page Title-->
+<section class="about-section">
+    <div class="anim-icons full-width">
+        <span class="icon icon-circle-blue wow fadeIn"></span>
+        <span class="icon icon-dots wow fadeInleft"></span>
+        <span class="icon icon-circle-1 wow zoomIn"></span>
+    </div>
+    <div class="auto-container">
+        <div class="row">
+            <!-- Content Column -->
+            <div class="content-column col-lg-12 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <div class="sec-title">
+                        <h2>잃어버린 현장의 분위기</h2>
+                        <div class="text">
+                            <p>오프라인 컨퍼런스에서는 행사장에 만들어진 멋진 후원사 부스를 통해, 후원사의 제품과 서비스을 두 눈으로 보고 체험할 수 있었습니다.<br>그리고 임직원을 직접 만나 회사와 제품에 대해 깊은 이야기를 나누곤 했습니다.</p>
+                            <p>COVID-19로 인해 모든 이벤트가 온라인으로 전환되면서, 우리는 오프라인에서 경험했던 모든 것들을 경험할 수 없게 되었습니다.</p>
+                            <p>OpenInfra Community Days Korea 2021는 잃어버린 현장의 분위기를 온라인에서 재현하고자, 새로운 프로그램으로 도전합니다</p>
+                        </div>
+                        <br><br>
+                        <h2>후원사의 밤을 통해 교류해보세요</h2>
+                        <div class="text">
+                            <p>후원사의 밤은 다이아몬드 후원사가 직접 운영하는 프로그램으로, 컨퍼런스 참가자들이 후원사와 직접 만날 수 있는 시간입니다.</p>
+                            <p>
+                                후원사에 입사하고 싶은데, 채용 담당자를 만날 기회가 없었나요?<br>
+                                후원사에서 서비스하는 제품을 가볍게 경험하고, 질문을 하고 싶으셨나요?<br>
+                                그동안 궁금했던 모든 것들을 후원사의 밤을 통해 해결하실 수 있습니다.
+                            </p>
+                            <p>그 외, 후원사에서 준비한 다양한 이벤트에 참여하면서 더욱 즐겁게 컨퍼런스를 즐겨보세요.</p>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sec-title text-center">
+            <h2>참여하는 후원사</h2>
+            <br><br>
+            <div class="row">
+            {% for d in diamond %}
+                <div class="gallery-item col-lg-4 col-md-6 col-sm-12 wow fadeIn">
+                    <div class="image-box text-center">
+                        <figure class="image-box"><a href="{{  d.homepage_url }}" target="_blank"><img src="{{ d.logo.url }}" alt="{{  d.name_ko }}"></a></figure>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

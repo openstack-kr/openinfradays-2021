@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%  block content %}
+    <!-- banner -->
+    <section class="banner-meetup" style="background-image: url({% static 'images/cover.png'%}); background-size: 100% 100%; ">
+         <div class="auto-container">
+             <div class="content-box">
+                <div class="address"><span class="icon fa fa-map-marker-alt"></span>Online Event</div>
+                <h2> OpenInfra Community <br>Days Korea 2021</h2>
+            </div>
+            <!-- Countdown -->
+            <div class="countdown clearfix">
+                <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2021/12/07"></div></div>
+            </div>
+             <!--
+            <div class="btn-box">
+                <a href="#" class="theme-btn btn-style-one"><span class="btn-title">Get Tickets</span></a>
+            </div>
+            -->
+         </div>
+    </section>
+
+    <!-- Features Section Three -->
+    <section class="features-section">
+        <div class="auto-container">
+            <div class="anim-icons">
+                <span class="icon icon-shape-3 wow fadeIn"></span>
+                <span class="icon icon-line-1 wow fadeIn"></span>
+            </div>
+
+            <div class="row">
+                <!-- Feature Block -->
+                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="icon-box"><span class="icon flaticon-play-button-3"></span></div>
+                        <h4><a href="/schedule/session">기술 세션</a></h4>
+                        <div class="text">오픈소스 인프라스트럭쳐 기술 동향과 다양한 경험을 얻어가세요</div>
+                        <div class="link-box"><a href="/schedule/session" class="theme-btn">Read More</a></div>
+                    </div>
+                </div>
+
+                <!-- Feature Block -->
+                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+                    <div class="inner-box">
+                        <div class="icon-box"><span class="icon flaticon-diamond-1"></span></div>
+                        <h4><a href="/program/sponsornight">후원사의 밤</a></h4>
+                        <div class="text">다이아몬드 후원사와 함께하는 시간, 후원사의 솔루션/채용/기업/질의 응답 등을 진행합니다. </div>
+                        <div class="link-box"><a href="/program/sponsornight" class="theme-btn">Read More</a></div>
+                    </div>
+                </div>
+
+                <!-- Feature Block -->
+                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+                    <div class="inner-box">
+                        <div class="icon-box"><span class="icon flaticon-group-2"></span></div>
+                        <h4><a href="/program/bof">BoF</a></h4>
+                        <div class="text">참가자들끼리 토론하는 시간, 다양한 주제로 서로의 의견을 나누어봐요</div>
+                        <div class="link-box"><a href="/program/bof" class="theme-btn">Read More</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Features Section -->
+
+    <!-- Speakers Section -->
+    <section class="speakers-section-two">
+        <div class="anim-icons">
+            <span class="icon icon-circle-4 wow zoomIn"></span>
+            <span class="icon icon-circle-3 wow zoomIn"></span>
+        </div>
+
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                <span class="title">Special Speakers</span>
+                <h2>Keynote</h2>
+            </div>
+
+            <!-- Keynote Block -->
+            <div class="row">
+                {% for k in keynote %}
+                <div class="speaker-block-two col-6 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="info-box">
+                            <h4 class="name"><a href="/session/{{ k.id }}">{{ k.title }}</a></h4>
+                            <!--<span class="designation">Event Manager</span>-->
+                        </div>
+                        <div class="image-box">
+                            <figure class="image"><a href="/session/{{ k.id }}"><img src="{{ k.speaker.profile_img.url }}" alt=""></a></figure>
+                            <h4>{{ k.speaker.name }}</h4>
+                        </div>
+                        <div class="social-box">
+                            <ul class="social-links social-icon-colored">
+                                <li><a href="{{ k.speaker.facebook }}" target="_blank"><i class="fa fa-facebook-f fa-2x"></i></a></li>
+                                <li><a href="{{ k.speaker.twitter }}" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                <li><a href="{{ k.speaker.blog }}" target="_blank"><i class="fa fa-home fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="sec-title text-center">
+                <span class="title">Special Speakers</span>
+                <h2>Sponsor Speaker</h2>
+            </div>
+            <div class="row">
+                {% for s in sponsor %}
+                <div class="speaker-block-two col-4 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="info-box">
+                            <h4 class="name"><a href="/session/{{ s.id }}">{{ s.title }}</a></h4>
+                            <!--<span class="designation">Event Manager</span>-->
+                        </div>
+                        <div class="image-box">
+                            <figure class="image"><a href="/session/{{ s.id }}"><img src="{{ s.speaker.profile_img.url }}" alt=""></a></figure>
+                            <h4>{{ s.speaker.name }}</h4>
+                        </div>
+                        <div class="social-box">
+                            <ul class="social-links social-icon-colored">
+                                {% if s.speaker.facebook != '' %}
+                                <li><a href="https://www.facebook.com/openinfradev"><i class="fa fa-facebook-f fa-2x"></i></a></li>
+                                {% endif %}
+                                {% if s.speaker.twitter != '' %}
+                                <li><a href="https://twitter.com/openinfradev"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                {% endif %}
+                                {% if s.speaker.blog != '' %}
+                                <li><a href="https://openinfra.dev"><i class="fa fa-home fa-2x"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+     <!--Sponsor Section-->
+    <section class="gallery-section">
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                <span class="title">Sponsors</span>
+                <h2>Diamond</h2>
+            </div>
+
+            <div class="row">
+                {% for d in diamond %}
+                    <div class="gallery-item col-lg-4 col-md-6 col-sm-12 wow fadeIn">
+                        <div class="image-box text-center">
+                            <figure class="image-box"><a href="{{  d.homepage_url }}" target="_blank"><img src="{{ d.logo.url }}" alt="{{  d.name_ko }}"></a></figure>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                <h2>Sapphire</h2>
+            </div>
+            <div class="row">
+                {% for d in sapphire %}
+                    <div class="gallery-item col-lg-4 col-md-6 col-sm-12 wow fadeIn">
+                        <div class="image-box text-center">
+                            <figure class="image-box"><a href="{{  d.homepage_url }}" target="_blank"><img src="{{ d.logo.url }}" alt="{{  d.name_ko }}"></a></figure>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+         <div class="sec-title text-center">
+            <h2>Gold</h2>
+        </div>
+    </section>
+
+{% endblock %}
