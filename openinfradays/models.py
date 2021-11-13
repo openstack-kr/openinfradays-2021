@@ -15,7 +15,7 @@ class Speaker(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     company = models.CharField(max_length=100, default='')
-    profile_img = models.ImageField(upload_to='images/speaker/', default=None)
+    profile_img = models.ImageField(upload_to='images/speaker/', default=None, blank=True)
     bio = models.TextField(max_length=1000, default='')
     twitter = models.CharField(max_length=100, default='', blank=True)
     facebook = models.CharField(max_length=100, default='', blank=True)

@@ -1,4 +1,5 @@
 {%  extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <!--Page Title-->
@@ -26,7 +27,7 @@
                             <span class="designation">{{ s.speaker.company }}</span>
                         </div>
                         <h4><a href="/session/{{ s.id }}">{{ s.title }}</a></h4>
-                        <div class="text">{{ s.details | truncatechars:30 }}</div>
+                        <div class="text">{{ s.details | truncatechars:60 }}</div>
                         <div class="btn-box">
                             <a href="/session/{{ s.id }}" class="theme-btn">Detail</a>
                         </div>
@@ -73,7 +74,11 @@
                                 <div class="inner-box">
                                     <div class="inner">
                                         <div class="speaker-info">
+                                            {% if s.speaker.profile_img %}
                                             <figure class="thumb"><img src="{{ s.speaker.profile_img.url }}" alt=""></figure>
+                                            {% else %}
+                                            <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                                            {% endif %}
                                             <h5 class="name">{{ s.speaker.name }}</h5>
                                             <span class="designation">Founder & CEO</span>
                                         </div>
@@ -96,7 +101,11 @@
                                 <div class="inner-box">
                                     <div class="inner">
                                         <div class="speaker-info">
+                                            {% if s.speaker.profile_img %}
                                             <figure class="thumb"><img src="{{ s.speaker.profile_img.url }}" alt=""></figure>
+                                            {% else %}
+                                            <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                                            {% endif %}
                                             <h5 class="name">{{ s.speaker.name }}</h5>
                                             <span class="designation">Founder & CEO</span>
                                         </div>
@@ -119,7 +128,11 @@
                                 <div class="inner-box">
                                     <div class="inner">
                                         <div class="speaker-info">
+                                            {% if s.speaker.profile_img %}
                                             <figure class="thumb"><img src="{{ s.speaker.profile_img.url }}" alt=""></figure>
+                                            {% else %}
+                                            <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                                            {% endif %}
                                             <h5 class="name">{{ s.speaker.name }}</h5>
                                             <span class="designation">Founder & CEO</span>
                                         </div>
