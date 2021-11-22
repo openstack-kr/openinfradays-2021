@@ -66,7 +66,7 @@
                             {% endif %}
                         </div>
                         <h4>Session detail</h4>
-                        <p>{{ session.details|linebreaks }}</p>
+                        <p>{{ session.details| safe }}</p>
                     </div>
                 </div>
             </div>

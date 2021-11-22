@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Sponsor, TechSession
+from .models import Sponsor, TechSession, VirtualBooth
 
 
 def index(request):
@@ -27,6 +27,18 @@ def sponsors(request):
     context = {'sponsor_current': 'current', 'diamond': diamond, 'sapphire': sapphire,
                'gold': gold}
     return render(request, 'sponsors.html', context)
+
+
+def virtualbooth(request):
+    vb = VirtualBooth.objects.all()
+    context = {'virtualbooth': vb}
+    return render(request, 'virtualbooth.html', context)
+
+
+def virtualbooth_detail(request, virtualbooth_id):
+    virtualbooth = VirtualBooth.objects.get(id=virtualbooth_id)
+    context = {'vb': virtualbooth}
+    return render(request, 'virtualbooth_detail.html', context)
 
 
 def session_detail(request, session_id):

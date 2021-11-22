@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Sponsor, TechSession, Speaker
+from .models import Sponsor, TechSession, Speaker, VirtualBooth
 
 
 class SponsorAdmin(admin.ModelAdmin):
@@ -19,6 +19,15 @@ class SpeakerAdmin(admin.ModelAdmin):
     list_display = ('name', 'email')
 
 
+class VirtualBoothAdmin(admin.ModelAdmin):
+    list_display = ('get_sponsor',)
+
+    @admin.display(ordering='sponsor__name_ko', description="Sponsor")
+    def get_sponsor(self, obj):
+        return obj.sponsor.name_ko
+
+
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(TechSession, TechSessionAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
+admin.site.register(VirtualBooth, VirtualBoothAdmin)

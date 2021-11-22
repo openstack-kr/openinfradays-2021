@@ -25,6 +25,8 @@ urlpatterns = [
     path('', views.index),
     path('about', views.about),
     path('sponsors', views.sponsors),
+    path('virtualbooth', views.virtualbooth),
+    path('virtualbooth/<int:virtualbooth_id>', views.virtualbooth_detail),
     path('session/<int:session_id>', views.session_detail),
     path('schedule/session', views.session_schedule),
     path('schedule/bof', views.bof_schedule),

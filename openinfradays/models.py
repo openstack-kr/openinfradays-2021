@@ -10,6 +10,9 @@ class Sponsor(models.Model):
                              choices=[('Diamond', 'Diamond'), ('Sapphire', 'Sapphire'), ('Gold', 'Gold')],
                              default='Gold')
 
+    def __str__(self):
+        return self.name_ko
+
 
 class Speaker(models.Model):
     name = models.CharField(max_length=100)
@@ -40,3 +43,27 @@ class TechSession(models.Model):
     qna_date = models.DateField(blank=True, default='2021-12-07')
     qna_time = models.TimeField(blank=True, default='00:00:00')
     qna_location = models.CharField(max_length=100, default='Gather Town')
+
+
+class VirtualBooth(models.Model):
+    sponsor = models.OneToOneField(Sponsor, on_delete=models.SET_NULL, null=True)
+    title = models.CharField(max_length=200, default='', blank=True)
+    short_desc = models.CharField(max_length=200, default='', blank=True)
+    body = models.TextField(max_length=10000, default='', blank=True)
+    custom_logo = models.ImageField(upload_to='images/virtualbooth/', null=True, default=None, blank=True)
+    video1 = models.CharField(max_length=100, default='', blank=True)
+    video2 = models.CharField(max_length=100, default='', blank=True)
+    video3 = models.CharField(max_length=100, default='', blank=True)
+    image1 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
+    image2 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
+    image3 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
+    link1 = models.CharField(max_length=100, default='', blank=True)
+    link1_txt = models.CharField(max_length=100, default='', blank=True)
+    link2 = models.CharField(max_length=100, default='', blank=True)
+    link2_txt = models.CharField(max_length=100, default='', blank=True)
+    link3 = models.CharField(max_length=100, default='', blank=True)
+    link3_txt = models.CharField(max_length=100, default='', blank=True)
+    link4 = models.CharField(max_length=100, default='', blank=True)
+    link4_txt = models.CharField(max_length=100, default='', blank=True)
+    link5 = models.CharField(max_length=100, default='', blank=True)
+    link5_txt = models.CharField(max_length=100, default='', blank=True)

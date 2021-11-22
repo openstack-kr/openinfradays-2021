@@ -137,7 +137,7 @@
                                             <span class="designation">Founder & CEO</span>
                                         </div>
                                         <h4><a href="/session/{{ s.id }}">{{ s.title }}</a></h4>
-                                        <div class="text">{{ s.details | truncatechars:200 }}</div>
+                                        <div class="text">{{ s.details | safe | truncatechars:200 }}</div>
                                         <div class="btn-box">
                                             <a href="/session/{{ s.id }}" class="theme-btn">Detail</a>
                                         </div>
