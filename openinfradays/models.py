@@ -1,4 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+UserModel = get_user_model()
 
 
 class Sponsor(models.Model):
@@ -67,3 +72,31 @@ class VirtualBooth(models.Model):
     link4_txt = models.CharField(max_length=100, default='', blank=True)
     link5 = models.CharField(max_length=100, default='', blank=True)
     link5_txt = models.CharField(max_length=100, default='', blank=True)
+
+
+class Profile(models.Model):
+    GITHUB = 'github'
+
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+    is_check_navercloud = models.BooleanField(default=False)
+    login_type = models.CharField(max_length=10)
+    complete = models.BooleanField(default=False)
+    company = models.CharField(max_length=100, default='', blank=True)
+    job = models.CharField(max_length=100, default='', blank=True)
+    agree_with_private = models.BooleanField(default=False, null=True)
+    agree_with_sponsor = models.BooleanField(default=False, null=True)
+    naver_cloud_form = models.CharField(max_length=10000, default='', blank=True)
+
+
+@receiver(post_save, sender=UserModel)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=UserModel)
+def save_user_profile(sender, instance, **kwargs):
+    if hasattr(instance, 'profile'):
+        instance.profile.save()
+    else:
+        Profile.objects.create(user=instance)

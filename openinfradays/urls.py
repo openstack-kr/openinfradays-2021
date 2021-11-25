@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from . import views
+from . import views, sns_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +33,12 @@ urlpatterns = [
     path('schedule/sponsornight', views.sponsornight_schedule),
     path('program/sponsornight', views.sponsor_night_introduce),
     path('program/bof', views.bof_introduce),
+    path('login', views.login),
+    path('login/github', sns_login.login_with_github),
+    path('auth/github/callback', sns_login.github_callback),
+    path('join', views.join),
+    path('profile', views.profile),
+    path('update_profile', views.update_profile),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

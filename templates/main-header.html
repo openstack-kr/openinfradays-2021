@@ -22,9 +22,9 @@
 
                     <div class="collapse navbar-collapse clearfix" id="navbarSupportedContent">
                         <ul class="navigation clearfix">
-                            <li class="{{ index_current }}"><a href="/">Home</a></li>
-                            <li><a href="https://openinfra.dev/legal/code-of-conduct" target="_blank">Code of Conduct</a> </li>
                             <li class="{{ about_current }} "><a href="/about">About</a></li>
+                            <li><a href="https://openinfra.dev/legal/code-of-conduct" target="_blank">Code of Conduct</a> </li>
+
                             <li class="{{ sponsor_current }}"><a href="/sponsors">Sponsors</a></li>
 
                             <li class="{{ schedule_current }} dropdown"><a href="#">Schedule</a>
@@ -44,6 +44,16 @@
                         </ul>
                     </div>
                 </nav>
+                <div class="outer-box">
+                    <!-- Button Box -->
+                    <div class="btn-box">
+                        {%  if not request.user.is_authenticated %}
+                        <a href="/login" class="theme-btn btn-style-one"><span class="btn-title">Login</span></a>
+                        {%  else %}
+                            <a href="/profile" class="theme-btn btn-style-one"><span class="btn-title">Profile</span></a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

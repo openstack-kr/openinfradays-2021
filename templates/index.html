@@ -13,11 +13,13 @@
             <div class="countdown clearfix">
                 <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2021/12/07"></div></div>
             </div>
-             <!--
+
+             {%  if not request.user.is_authenticated %}
             <div class="btn-box">
-                <a href="#" class="theme-btn btn-style-one"><span class="btn-title">Get Tickets</span></a>
+                <a href="/login" class="theme-btn btn-style-three"><span class="btn-title">참가 신청</span></a>
             </div>
-            -->
+             {% endif %}
+
          </div>
     </section>
 
@@ -92,9 +94,15 @@
                         </div>
                         <div class="social-box">
                             <ul class="social-links social-icon-colored">
-                                <li><a href="{{ k.speaker.facebook }}" target="_blank"><i class="fa fa-facebook-f fa-2x"></i></a></li>
-                                <li><a href="{{ k.speaker.twitter }}" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-                                <li><a href="{{ k.speaker.blog }}" target="_blank"><i class="fa fa-home fa-2x"></i></a></li>
+                                {% if k.speaker.facebook != '' %}
+                                <li><a href="{{ k.speaker.facebook }}"><i class="fa fa-facebook-f fa-2x"></i></a></li>
+                                {% endif %}
+                                {% if k.speaker.twitter != '' %}
+                                <li><a href="{{ k.speaker.twitter }}"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                {% endif %}
+                                {% if k.speaker.blog != '' %}
+                                <li><a href="{{ k.speaker.blog }}"><i class="fa fa-home fa-2x"></i></a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -121,13 +129,13 @@
                         <div class="social-box">
                             <ul class="social-links social-icon-colored">
                                 {% if s.speaker.facebook != '' %}
-                                <li><a href="https://www.facebook.com/openinfradev"><i class="fa fa-facebook-f fa-2x"></i></a></li>
+                                <li><a href="{{ s.speaker.facebook }}"><i class="fa fa-facebook-f fa-2x"></i></a></li>
                                 {% endif %}
                                 {% if s.speaker.twitter != '' %}
-                                <li><a href="https://twitter.com/openinfradev"><i class="fa fa-twitter fa-2x"></i></a></li>
+                                <li><a href="{{ s.speaker.twitter }}"><i class="fa fa-twitter fa-2x"></i></a></li>
                                 {% endif %}
                                 {% if s.speaker.blog != '' %}
-                                <li><a href="https://openinfra.dev"><i class="fa fa-home fa-2x"></i></a></li>
+                                <li><a href="{{ s.speaker.blog }}"><i class="fa fa-home fa-2x"></i></a></li>
                                 {% endif %}
                             </ul>
                         </div>

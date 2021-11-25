@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 
-from .models import Sponsor, TechSession, Speaker, VirtualBooth
+from .models import Sponsor, TechSession, Speaker, VirtualBooth, Profile
 
 
 class SponsorAdmin(admin.ModelAdmin):
@@ -27,7 +29,18 @@ class VirtualBoothAdmin(admin.ModelAdmin):
         return obj.sponsor.name_ko
 
 
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
+
+
+class UserAdmin(BaseUserAdmin):
+    inlines = (ProfileInline, )
+
+
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(TechSession, TechSessionAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
 admin.site.register(VirtualBooth, VirtualBoothAdmin)
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
