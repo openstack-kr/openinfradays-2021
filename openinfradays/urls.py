@@ -34,6 +34,7 @@ urlpatterns = [
     path('program/sponsornight', views.sponsor_night_introduce),
     path('program/bof', views.bof_introduce),
     path('login', views.login),
+    path('logout', views.logout),
     path('login/github', sns_login.login_with_github),
     path('auth/github/callback', sns_login.github_callback),
     path('join', views.join),

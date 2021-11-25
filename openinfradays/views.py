@@ -1,6 +1,6 @@
 import json
 
-from functools import wraps
+from django.contrib import auth
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -156,3 +156,9 @@ def profile(request):
 
 def login(request):
     return render(request, 'login.html', {})
+
+
+@agreement_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
