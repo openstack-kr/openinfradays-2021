@@ -12,8 +12,11 @@ from .models import Sponsor, TechSession, VirtualBooth
 def agreement_required(function):
     def wrap(request, *args, **kwargs):
         if request.user.is_authenticated:
-            if not request.user.profile.agree_with_private:
-                return redirect('/join')
+            try:
+                if not request.user.profile.agree_with_private:
+                    return redirect('/join')
+            except Exception as e:
+                pass
         return function(request, *args, **kwargs)
     return wrap
 
