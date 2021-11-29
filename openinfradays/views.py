@@ -1,7 +1,10 @@
 import json
+import requests
 
 from django.contrib import auth
+from django.contrib.auth import get_user_model, login
 from django.http import JsonResponse
+from django.conf import settings
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -156,6 +159,58 @@ def profile(request):
 
 def login(request):
     return render(request, 'login.html', {})
+
+
+@csrf_exempt
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    if request.method == "GET":
+        if not request.user.is_authenticated:
+            return render(request, 'signup.html')
+        return redirect('/')
+
+    elif request.method == "POST":
+        body = json.loads(request.body)
+        UserModel = get_user_model()
+        user = UserModel(email=body['user_email'])
+        user.first_name = body['user_name']
+        user.save()
+        user.profile.agree_with_private = True
+        user.profile.agree_with_sponsor = True
+        user.profile.company = body['user_org']
+        user.profile.job = body.get('user_job', '')
+        user.profile.naver_cloud_form = body.get('naver_cloud_form', '')
+        if body.get('naver_cloud_agree') == 'Y':
+            user.profile.is_check_navercloud = True
+        user.save()
+
+        email_appkey = settings.NHNCLOUD_EMAIL_APPKEY
+        email_secret = settings.NHNCLOUD_EMAIL_SECRET
+        base_domain = settings.BASE_DOMAIN
+        requests.post(
+            url="https://api-mail.cloud.toast.com/email/v2.0/appKeys/%s/sender/mail" % email_appkey,
+            headers={
+                "X-Secret-Key": email_secret,
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            data=json.dumps({
+                "senderName": "OpenInfra Days Korea",
+                "templateId": "signup_success",
+                "receiverList": [
+                    {
+                        "receiveMailAddr": body.get('user_email'),
+                        "receiveType": "MRT0"
+                    }
+                ],
+                "templateParameter": {
+                    "name": user.first_name
+                }
+            })
+        )
+        return JsonResponse({'result': True})
+    return render(request, 'signup.html')
 
 
 @agreement_required

@@ -5882,6 +5882,7 @@ img{
 
 .faq-form .form-group input[type="text"],
 .faq-form .form-group input[type="email"],
+.faq-form .form-group input[type="password"],
 .faq-form .form-group input[type="url"],
 .faq-form .form-group textarea,
 .faq-form .form-group select{
@@ -9485,6 +9486,7 @@ img{
 
 .ticket-form .form-group input[type="text"],
 .ticket-form .form-group input[type="email"],
+.ticket-form .form-group input[type="password"],
 .ticket-form .form-group input[type="phone"],
 .ticket-form .form-group input[type="number"],
 .ticket-form .form-group input[type="tel"],

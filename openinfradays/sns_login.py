@@ -1,11 +1,17 @@
+from django.utils import timezone
 import requests
+import json
+import uuid
 
 from django.contrib.auth import get_user_model, login
 from django.conf import settings
 from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
 
 
-from .models import Profile
+from .models import Profile, OnetimeToken
 
 
 UserModel = get_user_model()
@@ -53,4 +59,75 @@ def github_callback(request):
         login(request, user)
         if not user.profile.agree_with_private:
             return redirect('/join')
+    return redirect('/')
+
+
+@csrf_exempt
+def login_with_onetime(request):
+
+    if request.method == "GET":
+        email = request.COOKIES.get('email', '')
+        if email == '':
+            return redirect('/')
+        return render(request, 'onetime_login_info.html', {'email': email})
+
+    if request.method != "POST":
+        return redirect('/')
+
+    body = json.loads(request.body)
+    try:
+        user = UserModel.objects.get(email=body.get('email', ''))
+    except UserModel.DoesNotExist:
+        return HttpResponse('Unauthorized', status=401)
+
+    email_appkey = settings.NHNCLOUD_EMAIL_APPKEY
+    email_secret = settings.NHNCLOUD_EMAIL_SECRET
+    base_domain = settings.BASE_DOMAIN
+
+    token = uuid.uuid4().hex
+    ott = OnetimeToken(user=user, token=token)
+    ott.save()
+
+    response = requests.post(
+        url="https://api-mail.cloud.toast.com/email/v2.0/appKeys/%s/sender/mail" % email_appkey,
+        headers={
+            "X-Secret-Key": email_secret,
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        data=json.dumps({
+            "senderName": "OpenInfra Days Korea",
+            "templateId": "onetime_login",
+            "receiverList": [
+                {
+                    "receiveMailAddr": body.get('email'),
+                    "receiveType": "MRT0"
+                }
+            ],
+            "templateParameter": {
+                "onetime_url": "%s/login/onetime/%s" % (base_domain, token)
+            }
+        })
+    )
+    resp_body = json.loads(response.content)
+    if resp_body['header']['resultMessage'] != 'success':
+        return HttpResponse('{"fail": "Fail to send email"}', status=400)
+    resp = HttpResponse('{}', content_type='application/json')
+    resp.set_cookie('email', body.get('email'))
+    return resp
+
+
+def onetime_login_check(request, token):
+    try:
+        ott = OnetimeToken.objects.get(token=token)
+    except Exception:
+        return render(request, 'onetime_login_error.html')
+
+    now = timezone.now()
+    if ott.expired or now > ott.expire_at:
+        return render(request, 'onetime_login_error.html')
+
+    user = ott.user
+    ott.expired = True
+    ott.save()
+    login(request, user)
     return redirect('/')

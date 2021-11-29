@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
@@ -100,3 +102,10 @@ def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
     else:
         Profile.objects.create(user=instance)
+
+
+class OnetimeToken(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100, default='', blank=True)
+    expired = models.BooleanField(default=False)
+    expire_at = models.DateTimeField(default=datetime.now() + timedelta(days=1))

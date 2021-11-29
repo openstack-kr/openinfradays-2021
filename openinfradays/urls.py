@@ -35,11 +35,14 @@ urlpatterns = [
     path('program/bof', views.bof_introduce),
     path('login', views.login),
     path('logout', views.logout),
+    path('signup', views.signup),
     path('login/github', sns_login.login_with_github),
     path('auth/github/callback', sns_login.github_callback),
     path('join', views.join),
     path('profile', views.profile),
     path('update_profile', views.update_profile),
+    path('login/onetime', sns_login.login_with_onetime),
+    path('login/onetime/<str:token>', sns_login.onetime_login_check),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
