@@ -1,5 +1,6 @@
 import json
 import requests
+import uuid
 
 from django.contrib import auth
 from django.contrib.auth import get_user_model, login
@@ -174,7 +175,14 @@ def signup(request):
     elif request.method == "POST":
         body = json.loads(request.body)
         UserModel = get_user_model()
+        try:
+            u = UserModel.objects.get(email=body['user_email'])
+            return JsonResponse({'result': False})
+        except UserModel.DoesNotExist:
+            pass
+
         user = UserModel(email=body['user_email'])
+        user.username = "oidk_%s_" % uuid.uuid4().hex
         user.first_name = body['user_name']
         user.save()
         user.profile.agree_with_private = True
