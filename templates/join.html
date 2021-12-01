@@ -87,6 +87,18 @@
     }
     function regist() {
         // validation check
+        var email = $('#input_email').val().trim()
+        if( email === ''  || email === 'no_email'){
+            alert('이메일을 입력하세요.');
+            return;
+        }
+
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if ( !email.match(mailformat)) {
+            alert("올바른 이메일을 입력해주세요");
+            return ;
+        }
+
         if($('#input_name').val().trim() == ''){
             alert('이름을 입력하세요.');
             return;
@@ -110,6 +122,7 @@
 
 
         var registData = new Object();
+        registData.user_email = $('#input_email').val().trim();
         registData.user_name = $('#input_name').val().trim();
         registData.user_org = $('#input_org').val().trim();
         registData.user_job = $('#input_job').val().trim();
@@ -195,7 +208,7 @@
                         {% csrf_token %}
                         <dt><label class="txt-label">이메일 *</label></dt>
                         <dd>
-                            <input id="input_email" type="text" class="input-text" maxlength="200" value="{{ user.email }}" disabled>
+                            <input id="input_email" type="text" class="input-text" maxlength="200" value="{{ user.email }}">
                         </dd>
                         <dt><label class="txt-label">이름 *</label></dt>
                         <dd>
@@ -218,7 +231,7 @@
                         <li>
                             <input id="regist_naver_cloud" name="regist_naver_cloud" type="checkbox" class="input-checkbox" onclick="naver_cloud_check()">
                             <div class="txt-label">
-                                네이버 클라우드 크레딧 (30만원) 신청
+                                네이버 클라우드 크레딧 (30만원) 지원 신청 (3명 선정)
                             </div>
                             <br>
                             네이버 클라우드를 통해 여러분들이 만들고 싶은 것 / 사용하고 싶은 것 등을 자유롭게 적어주세요. 신청자 중 운영진이 우수 사연을 선정하여, 총 3분에게 30만원 상당의 네이버 클라우드 크레딧을 드립니다.

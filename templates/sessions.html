@@ -107,10 +107,10 @@
                                             <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
                                             {% endif %}
                                             <h5 class="name">{{ s.speaker.name }}</h5>
-                                            <span class="designation">Founder & CEO</span>
+                                            <span class="designation">{{ s.company }}</span>
                                         </div>
                                         <h4><a href="/session/{{ s.id }}">{{ s.title }}</a></h4>
-                                        <div class="text">{{ s.details | truncatechars:200 }}</div>
+                                        <div class="text">{{ s.details | safe | truncatechars:200 }}</div>
                                         <div class="btn-box">
                                             <a href="/session/{{ s.id }}" class="theme-btn">Detail</a>
                                         </div>

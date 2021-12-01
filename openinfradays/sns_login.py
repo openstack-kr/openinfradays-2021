@@ -45,8 +45,10 @@ def github_callback(request):
     profile_json = profile_request.json()
     username = profile_json.get('login', None)
     if username is not None:
-        name = profile_json.get('name', '')
+        name = profile_json.get('name', 'NO NAME')
         email = profile_json.get("email")
+        if email is None:
+            email = 'no_email'
         try:
             user = UserModel.objects.get(email=email)
         except UserModel.DoesNotExist:

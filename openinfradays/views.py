@@ -187,6 +187,7 @@ def signup(request):
         user.save()
         user.profile.agree_with_private = True
         user.profile.agree_with_sponsor = True
+        user.email = body['user_email']
         user.profile.company = body['user_org']
         user.profile.job = body.get('user_job', '')
         user.profile.naver_cloud_form = body.get('naver_cloud_form', '')
