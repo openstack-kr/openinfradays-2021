@@ -29,6 +29,8 @@ def logging(function):
     def wrap(request, *args, **kwargs):
         user = None
         if request.user.is_authenticated:
+            if request.user.is_staff:
+                return function(request, *args, **kwargs)
             user = request.user
         url = request.path_info
         acl = AccessLog(user=user, path=url)
