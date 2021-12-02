@@ -52,11 +52,12 @@ def index(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
+    media = Sponsor.objects.filter(level='Media')
     keynote_session = TechSession.objects.filter(session_type='Keynote')
     sponsor_session = TechSession.objects.filter(session_type='Sponsor')
     menu = make_menu_context('index')
     context = {'diamond': diamond, 'sapphire': sapphire,
-               'gold': gold,
+               'gold': gold, 'media': media,
                'keynote': keynote_session, 'sponsor': sponsor_session,
                'login': login}
     return render(request, 'index.html', {**menu, **context})
@@ -75,8 +76,9 @@ def sponsors(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
+    media = Sponsor.objects.filter(level='Media')
     menu = make_menu_context('sponsor')
-    context = {'diamond': diamond, 'sapphire': sapphire, 'gold': gold}
+    context = {'diamond': diamond, 'sapphire': sapphire, 'gold': gold, 'media': media}
     return render(request, 'sponsors.html', {**menu, **context})
 
 
