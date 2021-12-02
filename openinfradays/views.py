@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Sponsor, TechSession, VirtualBooth
+from .models import Sponsor, TechSession, VirtualBooth, AccessLog
 
 
 def agreement_required(function):
@@ -25,6 +25,18 @@ def agreement_required(function):
     return wrap
 
 
+def logging(function):
+    def wrap(request, *args, **kwargs):
+        user = None
+        if request.user.is_authenticated:
+            user = request.user
+        url = request.path_info
+        acl = AccessLog(user=user, path=url)
+        acl.save()
+        return function(request, *args, **kwargs)
+    return wrap
+
+
 def make_menu_context(current=None):
     context = {'about_current': '', 'sponsor_current': '', 'schedule_current': '', 'program_current': '',
                'virtualbooth_current': ''}
@@ -35,6 +47,7 @@ def make_menu_context(current=None):
 
 
 @agreement_required
+@logging
 def index(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
@@ -50,12 +63,14 @@ def index(request):
 
 
 @agreement_required
+@logging
 def about(request):
     context = make_menu_context('about')
     return render(request, 'about.html', context)
 
 
 @agreement_required
+@logging
 def sponsors(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
@@ -90,6 +105,7 @@ def join(request):
 
 
 @csrf_exempt
+@logging
 def update_profile(request):
     if request.method != "PUT" or not request.user.is_authenticated:
         return redirect('/')
@@ -106,6 +122,7 @@ def update_profile(request):
 
 
 @agreement_required
+@logging
 def virtualbooth(request):
     vb = VirtualBooth.objects.all()
     menu = make_menu_context('virtualbooth')
@@ -114,6 +131,7 @@ def virtualbooth(request):
 
 
 @agreement_required
+@logging
 def virtualbooth_detail(request, virtualbooth_id):
     virtualbooth = VirtualBooth.objects.get(id=virtualbooth_id)
     menu = make_menu_context('virtualbooth')
@@ -122,6 +140,7 @@ def virtualbooth_detail(request, virtualbooth_id):
 
 
 @agreement_required
+@logging
 def session_detail(request, session_id):
     session = TechSession.objects.get(id=session_id)
     menu = make_menu_context('schedule')
@@ -130,6 +149,7 @@ def session_detail(request, session_id):
 
 
 @agreement_required
+@logging
 def session_schedule(request):
     keynote = TechSession.objects.filter(session_type='Keynote')
     tech_session = TechSession.objects.filter(session_type='Tech')
@@ -142,18 +162,21 @@ def session_schedule(request):
 
 
 @agreement_required
+@logging
 def bof_schedule(request):
     menu = make_menu_context('schedule')
     return render(request, 'bof_schedule.html', menu)
 
 
 @agreement_required
+@logging
 def sponsornight_schedule(request):
     menu = make_menu_context('schedule')
     return render(request, 'sponsornight_schedule.html', menu)
 
 
 @agreement_required
+@logging
 def sponsor_night_introduce(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     menu = make_menu_context('program')
@@ -162,6 +185,7 @@ def sponsor_night_introduce(request):
 
 
 @agreement_required
+@logging
 def bof_introduce(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     context = {'diamond': diamond}
@@ -171,6 +195,7 @@ def bof_introduce(request):
 
 @agreement_required
 @csrf_exempt
+@logging
 def profile(request):
     if not request.user.is_authenticated:
         return redirect('/login')

@@ -109,3 +109,9 @@ class OnetimeToken(models.Model):
     token = models.CharField(max_length=100, default='', blank=True)
     expired = models.BooleanField(default=False)
     expire_at = models.DateTimeField(default=datetime.now() + timedelta(days=1))
+
+
+class AccessLog(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True)
+    path = models.CharField(max_length=100, default='', blank=True)
+    access_at = models.DateTimeField(default=datetime.now())

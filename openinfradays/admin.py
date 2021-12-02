@@ -2,7 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Sponsor, TechSession, Speaker, VirtualBooth, Profile
+from .models import Sponsor, TechSession, Speaker, VirtualBooth, Profile, AccessLog
+
+
+class AccessLogAdmin(admin.ModelAdmin):
+    list_display = ('get_user_name', 'path', 'access_at')
+
+    @admin.display(ordering='user__first_name', description='username')
+    def get_user_name(self, obj):
+        if obj.user is None:
+            return 'Anon'
+        return obj.user.first_name
 
 
 class SponsorAdmin(admin.ModelAdmin):
@@ -42,5 +52,6 @@ admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(TechSession, TechSessionAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
 admin.site.register(VirtualBooth, VirtualBoothAdmin)
+admin.site.register(AccessLog, AccessLogAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
