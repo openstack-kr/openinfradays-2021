@@ -12,6 +12,7 @@ from django.shortcuts import render
 
 
 from .models import Profile, OnetimeToken
+from .views import make_menu_context
 
 
 UserModel = get_user_model()
@@ -71,7 +72,10 @@ def login_with_onetime(request):
         email = request.COOKIES.get('email', '')
         if email == '':
             return redirect('/')
-        return render(request, 'onetime_login_info.html', {'email': email})
+
+        context = {'email': email}
+        menu = make_menu_context()
+        return render(request, 'onetime_login_info.html', {**menu, **context})
 
     if request.method != "POST":
         return redirect('/')

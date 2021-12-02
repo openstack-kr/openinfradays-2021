@@ -25,6 +25,15 @@ def agreement_required(function):
     return wrap
 
 
+def make_menu_context(current=None):
+    context = {'about_current': '', 'sponsor_current': '', 'schedule_current': '', 'program_current': '',
+               'virtualbooth_current': ''}
+    if current is not None:
+        key = '%s_current' % current
+        context[key] = 'current'
+    return context
+
+
 @agreement_required
 def index(request):
     diamond = Sponsor.objects.filter(level='Diamond')
@@ -32,16 +41,17 @@ def index(request):
     gold = Sponsor.objects.filter(level='Gold')
     keynote_session = TechSession.objects.filter(session_type='Keynote')
     sponsor_session = TechSession.objects.filter(session_type='Sponsor')
-    context = {'index_current': 'current', 'diamond': diamond, 'sapphire': sapphire,
+    menu = make_menu_context('index')
+    context = {'diamond': diamond, 'sapphire': sapphire,
                'gold': gold,
                'keynote': keynote_session, 'sponsor': sponsor_session,
                'login': login}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', {**menu, **context})
 
 
 @agreement_required
 def about(request):
-    context = {'about_current': 'current'}
+    context = make_menu_context('about')
     return render(request, 'about.html', context)
 
 
@@ -50,9 +60,9 @@ def sponsors(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
-    context = {'sponsor_current': 'current', 'diamond': diamond, 'sapphire': sapphire,
-               'gold': gold}
-    return render(request, 'sponsors.html', context)
+    menu = make_menu_context('sponsor')
+    context = {'diamond': diamond, 'sapphire': sapphire, 'gold': gold}
+    return render(request, 'sponsors.html', {**menu, **context})
 
 
 @csrf_exempt
@@ -98,22 +108,25 @@ def update_profile(request):
 @agreement_required
 def virtualbooth(request):
     vb = VirtualBooth.objects.all()
-    context = {'virtualbooth_current': 'current', 'virtualbooth': vb}
-    return render(request, 'virtualbooth.html', context)
+    menu = make_menu_context('virtualbooth')
+    context = {'virtualbooth': vb}
+    return render(request, 'virtualbooth.html', {**menu, **context})
 
 
 @agreement_required
 def virtualbooth_detail(request, virtualbooth_id):
     virtualbooth = VirtualBooth.objects.get(id=virtualbooth_id)
+    menu = make_menu_context('virtualbooth')
     context = {'vb': virtualbooth}
-    return render(request, 'virtualbooth_detail.html', context)
+    return render(request, 'virtualbooth_detail.html', {**menu, **context})
 
 
 @agreement_required
 def session_detail(request, session_id):
     session = TechSession.objects.get(id=session_id)
+    menu = make_menu_context('schedule')
     context = {'session': session}
-    return render(request, 'session_detail.html', context)
+    return render(request, 'session_detail.html', {**menu, **context})
 
 
 @agreement_required
@@ -123,30 +136,37 @@ def session_schedule(request):
     day1 = tech_session.filter(open_date='2021-12-07')
     day2 = tech_session.filter(open_date='2021-12-08')
     day3 = tech_session.filter(open_date='2021-12-09')
+    menu = make_menu_context('schedule')
     context = {'keynote': keynote, 'day1': day1, 'day2': day2, 'day3': day3}
-    return render(request, 'sessions.html', context)
+    return render(request, 'sessions.html', {**menu, **context})
 
 
 @agreement_required
 def bof_schedule(request):
-    return render(request, 'bof_schedule.html')
+    menu = make_menu_context('schedule')
+    return render(request, 'bof_schedule.html', menu)
 
 
 @agreement_required
 def sponsornight_schedule(request):
-    return render(request, 'sponsornight_schedule.html')
+    menu = make_menu_context('schedule')
+    return render(request, 'sponsornight_schedule.html', menu)
 
 
 @agreement_required
 def sponsor_night_introduce(request):
     diamond = Sponsor.objects.filter(level='Diamond')
-    return render(request, 'sponsor_night_introduce.html', {'diamond': diamond})
+    menu = make_menu_context('program')
+    context = {'diamond': diamond}
+    return render(request, 'sponsor_night_introduce.html', {**menu, **context})
 
 
 @agreement_required
 def bof_introduce(request):
     diamond = Sponsor.objects.filter(level='Diamond')
-    return render(request, 'bof_introduce.html', {'diamond': diamond})
+    context = {'diamond': diamond}
+    menu = make_menu_context('program')
+    return render(request, 'bof_introduce.html', {**menu, **context})
 
 
 @agreement_required
@@ -155,11 +175,13 @@ def profile(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     user = request.user
-    return render(request, 'profile.html', {'user': user})
+    context = {'user': user}
+    menu = make_menu_context()
+    return render(request, 'profile.html', {**menu, **context})
 
 
 def login(request):
-    return render(request, 'login.html', {})
+    return render(request, 'login.html', make_menu_context())
 
 
 @csrf_exempt
@@ -169,7 +191,7 @@ def signup(request):
 
     if request.method == "GET":
         if not request.user.is_authenticated:
-            return render(request, 'signup.html')
+            return render(request, 'signup.html', make_menu_context())
         return redirect('/')
 
     elif request.method == "POST":
@@ -219,7 +241,7 @@ def signup(request):
             })
         )
         return JsonResponse({'result': True})
-    return render(request, 'signup.html')
+    return render(request, 'signup.html', make_menu_context())
 
 
 @agreement_required
