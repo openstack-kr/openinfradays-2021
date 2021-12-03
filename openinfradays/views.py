@@ -2,6 +2,8 @@ import json
 import requests
 import uuid
 
+from datetime import datetime
+
 from django.contrib import auth
 from django.contrib.auth import get_user_model, login
 from django.http import JsonResponse
@@ -10,7 +12,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Sponsor, TechSession, VirtualBooth, AccessLog
+from .models import Sponsor, TechSession, VirtualBooth, AccessLog, SponsorNight
 
 
 def agreement_required(function):
@@ -176,7 +178,9 @@ def bof_schedule(request):
 @logging
 def sponsornight_schedule(request):
     menu = make_menu_context('schedule')
-    return render(request, 'sponsornight_schedule.html', menu)
+    sponsor_night = SponsorNight.objects.all()
+    now = datetime.now()
+    return render(request, 'sponsornight_schedule.html', {**menu, 'sponsor_night': sponsor_night, 'now': now})
 
 
 @agreement_required
