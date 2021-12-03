@@ -8,6 +8,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model, login
 from django.http import JsonResponse
 from django.conf import settings
+from django.db.models import Q
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -158,7 +159,7 @@ def session_detail(request, session_id):
 @logging
 def session_schedule(request):
     keynote = TechSession.objects.filter(session_type='Keynote')
-    tech_session = TechSession.objects.filter(session_type='Tech')
+    tech_session = TechSession.objects.filter(Q(session_type='Tech') | Q(session_type='Sponsor'))
     day1 = tech_session.filter(open_date='2021-12-07')
     day2 = tech_session.filter(open_date='2021-12-08')
     day3 = tech_session.filter(open_date='2021-12-09')
