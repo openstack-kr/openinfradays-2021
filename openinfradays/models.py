@@ -122,6 +122,7 @@ class AccessLog(models.Model):
 class SponsorNight(models.Model):
     sponsor = models.OneToOneField(Sponsor, on_delete=models.CASCADE)
     event_date = models.DateField(blank=True, default='2021-12-07')
+    event_time = models.CharField(max_length=100, default='', blank=True)
     feature1 = models.CharField(max_length=100, default='', blank=True)
     feature2 = models.CharField(max_length=100, default='', blank=True)
     feature3 = models.CharField(max_length=100, default='', blank=True)
