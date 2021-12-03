@@ -3787,6 +3787,7 @@ img{
 	position: relative;
 	background-color: #ffffff;
 	overflow: hidden;
+	height: 470px;
 	padding: 50px 0 40px;
 	box-shadow: 0 20px 30px rgba(0,0,0,0.10);
 	border: 1px solid #dddddd;
