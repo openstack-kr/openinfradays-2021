@@ -44,18 +44,33 @@
         </div>
         <div class="sec-title text-center">
             <h2>참여하는 후원사</h2>
-            <br><br>
+        </div>
+        <div class="auto-container">
             <div class="row">
-            {% for d in diamond %}
-                <div class="gallery-item col-lg-4 col-md-6 col-sm-12 wow fadeIn">
-                    <div class="image-box text-center">
-                        <figure class="image-box"><a href="{{  d.homepage_url }}" target="_blank"><img src="{{ d.logo.url }}" alt="{{  d.name_ko }}"></a></figure>
+            {% for sn in sponsor_night %}
+                <div class="pricing-block-three col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="title">{{ sn.event_date.month  }} / {{ sn.event_date.day }}</div>
+                        <div class="title" style="font-size: 23px">{{ sn.event_time }}</div>
+                        <h4 class="price"><img src="{{ sn.sponsor.logo.url }}"></h4>
+                        <ul class="features">
+                            <li>{{ sn.feature1 }}</li>
+                            <li>{{ sn.feature2 }}</li>
+                            <li>{{ sn.feature3 }}</li>
+                        </ul>
+                        <div class="btn-box">
+                            {% if now.month == sn.event_date.month and now.day == sn.event_date.day %}
+                            <a href="https://gather.town/app/SOxabOWFw4zC28ux/openinfradays-2021" class="theme-btn btn-style-one" target="_blank"><span class="btn-title">입장하기</span></a>
+                            {% endif %}
+                            {% if sn.custom_btn_txt != '' %}
+                            <a href="{{ sn.custom_btn_link }}" class="theme-btn btn-style-three" target="_blank"><span class="btn-title">{{ sn.custom_btn_txt }}</span></a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
             </div>
-        </div>
-        </div>
+         </div>
     </div>
 
 </section>

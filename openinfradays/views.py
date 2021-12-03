@@ -189,7 +189,9 @@ def sponsornight_schedule(request):
 def sponsor_night_introduce(request):
     diamond = Sponsor.objects.filter(level='Diamond')
     menu = make_menu_context('program')
-    context = {'diamond': diamond}
+    sponsor_night = SponsorNight.objects.all()
+    now = datetime.now()
+    context = {'sponsor_night': sponsor_night, 'now': now}
     return render(request, 'sponsor_night_introduce.html', {**menu, **context})
 
 
