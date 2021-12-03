@@ -14,11 +14,15 @@
                 <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2021/12/07"></div></div>
             </div>
 
-             {%  if not request.user.is_authenticated %}
+
+            <div class="btn-box">
+                <a href="/schedule/sponsornight" class="theme-btn btn-style-three"><span class="btn-title">후원사의 밤 알아보기</span></a>
+            </div>
+            {%  if not request.user.is_authenticated %}
             <div class="btn-box">
                 <a href="/login" class="theme-btn btn-style-three"><span class="btn-title">참가 신청</span></a>
             </div>
-             {% endif %}
+            {% endif %}
 
          </div>
     </section>
@@ -65,7 +69,51 @@
         </div>
     </section>
     <!--End Features Section -->
+    <section class="faq-section">
+        <div class="auto-container">
+            <!-- Sec Title -->
+            <div class="sec-title">
+                <span class="title">FAQ'S</span>
+                <h2>General Questions</h2>
+            </div>
 
+            <div class="row clearfix">
+                <!-- Content Column -->
+                <div class="content-column col-lg-6 col-md-12 col-sm-12">
+                    <div class="inner-column">
+                        <!--Accordian Box-->
+                        <ul class="accordion-box">
+                            <!--Block-->
+                            <li class="accordion block wow fadeInUp">
+                                <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>세션은 언제 볼 수 있나요?</div>
+                                <div class="acc-content">
+                                    <div class="content">
+                                        <div class="text">모든 세션은 배정된 날짜의 오전 10시부터 다음날 오전 9시까지 발표 소개 페이지에서 시청 가능합니다.<br> 예) 8일에 배정된 세션은 8일 오전 10시 ~ 9일 오전 9시까지 시청 가능</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-column col-lg-6 col-md-12 col-sm-12">
+                    <div class="inner-column">
+                        <!--Accordian Box-->
+                        <ul class="accordion-box">
+                            <!--Block-->
+                            <li class="accordion block active-block wow fadeInUp">
+                                <div class="acc-btn active"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>발표 다시보기가 가능한가요?</div>
+                                <div class="acc-content current">
+                                    <div class="content">
+                                        <div class="text">컨퍼런스가 끝난 다음날 12월 10일부터 모든 세션 다시보기가 홈페이지를 통해 제공됩니다.</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Speakers Section -->
     <section class="speakers-section-two">
         <div class="anim-icons">
