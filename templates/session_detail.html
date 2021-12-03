@@ -3,6 +3,7 @@
 
 {% block content %}
 <!--Page Title-->
+
 <section class="page-title">
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
@@ -51,7 +52,11 @@
                             <div class="col-lg-4">
                                 <div class="speaker-session-info">
                                     <h5>Schedule</h5>
-                                    <h6>{{ session.open_date }}</h6>
+                                    {% if session.session_type == 'Keynote' %}
+                                        <h6>All Day</h6>
+                                    {% else %}
+                                        <h6>{{ session.open_date }}</h6>
+                                    {% endif %}
                                 </div>
                             </div>
                             {% if session.qna_enable %}
@@ -71,7 +76,10 @@
                 </div>
             </div>
         </div>
+        <div class="row" id="video_area" name="video_area">
+        </div>
     </div>
 </section>
+
 <!--End Speker Detail -->
 {% endblock %}

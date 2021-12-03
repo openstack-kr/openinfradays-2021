@@ -62,7 +62,9 @@ class VirtualBooth(models.Model):
     video2 = models.CharField(max_length=100, default='', blank=True)
     video3 = models.CharField(max_length=100, default='', blank=True)
     image1 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
+    image1_link = models.FileField(upload_to='files/virtualbooth/', default='', blank=True)
     image2 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
+    image2_link = models.FileField(upload_to='files/virtualbooth/', default='', blank=True)
     image3 = models.ImageField(upload_to='images/virtualbooth/', default=None, blank=True)
     link1 = models.CharField(max_length=100, default='', blank=True)
     link1_txt = models.CharField(max_length=100, default='', blank=True)
@@ -115,3 +117,9 @@ class AccessLog(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True)
     path = models.CharField(max_length=100, default='', blank=True)
     access_at = models.DateTimeField(default=datetime.now())
+
+
+class SponsorNight(models.Model):
+    sponsor = models.OneToOneField(Sponsor, on_delete=models.CASCADE)
+    event_date = models.DateField(blank=True, default='2021-12-07')
+    details = models.TextField(max_length=1000)

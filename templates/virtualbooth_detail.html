@@ -62,13 +62,21 @@
 
     {% if vb.image1 %}
     <div class="area-image">
-        <img src="{{ vb.image1.url }}">
+        {% if vb.image1_link != '' %}
+            <a href="{{vb.image1_link.url }}"><img src="{{ vb.image1.url }}"></a>
+        {% else %}
+            <img src="{{ vb.image1.url }}">
+        {% endif %}
     </div>
     {% endif %}
 
     {% if vb.image2 %}
     <div class="area-image">
-        <img src="{{ vb.image2.url }}">
+         {% if vb.image2_link != '' %}
+             <a href="{{vb.image2_link.url }}"><img src="{{ vb.image2.url }}"></a>
+         {% else %}
+             <img src="{{ vb.image2.url }}">
+         {% endif %}
     </div>
     {% endif %}
 
