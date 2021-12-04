@@ -128,3 +128,12 @@ class SponsorNight(models.Model):
     feature3 = models.CharField(max_length=100, default='', blank=True)
     custom_btn_txt = models.CharField(max_length=100, default='', blank=True)
     custom_btn_link = models.CharField(max_length=100, default='', blank=True)
+
+
+class Bof(models.Model):
+    title = models.CharField(max_length=100, default='')
+    moderator = models.CharField(max_length=120, default='')
+    profile_img = models.ImageField(upload_to='images/bof/', default=None, blank=True)
+    bof_date = models.DateField(default='2021-12-07')
+    bof_time = models.CharField(max_length=30, default='')
+    content = models.TextField(max_length=1000, default='')

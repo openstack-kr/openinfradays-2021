@@ -13,7 +13,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Sponsor, TechSession, VirtualBooth, AccessLog, SponsorNight
+from .models import Sponsor, TechSession, VirtualBooth, \
+    AccessLog, SponsorNight, Bof
 
 
 def agreement_required(function):
@@ -172,7 +173,8 @@ def session_schedule(request):
 @logging
 def bof_schedule(request):
     menu = make_menu_context('schedule')
-    return render(request, 'bof_schedule.html', menu)
+    bof = Bof.objects.all()
+    return render(request, 'bof_schedule.html', {**menu, "bof": bof})
 
 
 @agreement_required
@@ -187,7 +189,6 @@ def sponsornight_schedule(request):
 @agreement_required
 @logging
 def sponsor_night_introduce(request):
-    diamond = Sponsor.objects.filter(level='Diamond')
     menu = make_menu_context('program')
     sponsor_night = SponsorNight.objects.all()
     now = datetime.now()
@@ -284,3 +285,9 @@ def signup(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+@agreement_required
+def bof_detail(request, bof_id):
+    bof = Bof.objects.get(id=bof_id)
+    return render(request, 'bof_detail.html', {'b': bof})

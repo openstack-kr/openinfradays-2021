@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Sponsor, TechSession, Speaker, VirtualBooth, Profile, AccessLog, SponsorNight
+from .models import Sponsor, TechSession, Speaker, VirtualBooth,\
+    Profile, AccessLog, SponsorNight, Bof
 
 
 class AccessLogAdmin(admin.ModelAdmin):
@@ -47,6 +48,10 @@ class SponsorNightAdmin(admin.ModelAdmin):
         return obj.sponsor.name_ko
 
 
+class BofAdmin(admin.ModelAdmin):
+    list_display = ('title', 'moderator', 'bof_date', 'bof_time')
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -62,5 +67,6 @@ admin.site.register(Speaker, SpeakerAdmin)
 admin.site.register(VirtualBooth, VirtualBoothAdmin)
 admin.site.register(AccessLog, AccessLogAdmin)
 admin.site.register(SponsorNight, SponsorNightAdmin)
+admin.site.register(Bof, BofAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

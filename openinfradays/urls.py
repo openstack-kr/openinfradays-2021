@@ -43,6 +43,7 @@ urlpatterns = [
     path('update_profile', views.update_profile),
     path('login/onetime', sns_login.login_with_onetime),
     path('login/onetime/<str:token>', sns_login.onetime_login_check),
+    path('bof/<int:bof_id>', views.bof_detail),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
