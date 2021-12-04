@@ -167,6 +167,9 @@ def session_detail(request, session_id):
          ( now.day == (session.open_date.day + 1) and now.hour < 10)):
         release = True
 
+    if session.session_type == "Keynote":
+        release = True
+
     context = {'session': session, 'videos': videos, 'release': release}
     return render(request, 'session_detail.html', {**menu, **context})
 
