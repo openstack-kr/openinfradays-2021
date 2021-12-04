@@ -3,11 +3,10 @@
 
 {% block content %}
 <!--Page Title-->
-
 <section class="page-title">
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
-        {% if session.slide_url %}
+        {% if release and session.slide_url %}
          <div class="btn-box">
                 <a href="{{ session.slide_url.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
          </div>
@@ -77,9 +76,26 @@
             </div>
         </div>
         <div class="row" id="video_area" name="video_area">
+
         </div>
     </div>
 </section>
 
+<script>
+{% if release %}
+new ncplayer('video_area', {
+              autostart: false,
+              playlist: [
+                  {% if session.ad1_url != '' %}
+                  {file: "{{ session.ad1_url }}" },
+                  {% endif %}
+                  {% if session.ad2_url != '' %}
+                  {file: "{{ session.ad2_url }}" },
+                  {% endif %}
+                  {file: "{{ session.video_url}}" }
+                  ],
+            });
+{% endif %}
+</script>
 <!--End Speker Detail -->
 {% endblock %}

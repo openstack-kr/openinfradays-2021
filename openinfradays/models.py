@@ -41,6 +41,8 @@ class TechSession(models.Model):
     speaker = models.OneToOneField(Speaker, on_delete=models.SET_NULL, null=True)
     slide = models.FileField(upload_to='slides/', default='', blank=True)
     video_url = models.CharField(max_length=1000, default='', blank=True)
+    ad1_url = models.CharField(max_length=1000, default='', blank=True)
+    ad2_url = models.CharField(max_length=1000, default='', blank=True)
     open_date = models.DateField(default='2021-12-07')
 
     session_type = models.CharField(max_length=20,

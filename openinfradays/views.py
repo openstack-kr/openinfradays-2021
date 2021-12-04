@@ -152,7 +152,22 @@ def virtualbooth_detail(request, virtualbooth_id):
 def session_detail(request, session_id):
     session = TechSession.objects.get(id=session_id)
     menu = make_menu_context('schedule')
-    context = {'session': session}
+    videos = []
+    if session.ad1_url != '':
+        videos.append(session.ad1_url)
+    if session.ad2_url != '':
+        videos.append(session.ad2_url)
+    videos.append(session.video_url)
+
+    now = datetime.now()
+
+    release = False
+    if now.month == session.open_date.month and \
+        (( now.day == session.open_date.day and now.hour >= 10 ) or
+         ( now.day == (session.open_date.day + 1) and now.hour < 10)):
+        release = True
+
+    context = {'session': session, 'videos': videos, 'release': release}
     return render(request, 'session_detail.html', {**menu, **context})
 
 
