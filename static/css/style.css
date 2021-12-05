@@ -2378,6 +2378,16 @@ img{
 	text-shadow: 0 20px 40px rgba(0,0,0,.80);
 }
 
+.banner-meetup h3{
+	display: block;
+	font-size: 50px;
+	line-height: 1.2em;
+	color: #ffffff;
+	font-weight: 700;
+	margin-bottom: 40px;
+	text-shadow: 0 20px 40px rgba(0,0,0,.80);
+}
+
 .banner-meetup .address{
 	position: relative;
 	display: block;

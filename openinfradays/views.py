@@ -45,7 +45,7 @@ def logging(function):
 
 def make_menu_context(current=None):
     context = {'about_current': '', 'sponsor_current': '', 'schedule_current': '', 'program_current': '',
-               'virtualbooth_current': ''}
+               'virtualbooth_current': '', 'intro': False}
     if current is not None:
         key = '%s_current' % current
         context[key] = 'current'
@@ -236,7 +236,9 @@ def profile(request):
 
 
 def login(request):
-    return render(request, 'login.html', make_menu_context())
+    menu = make_menu_context()
+    menu['intro'] = True
+    return render(request, 'login.html', menu)
 
 
 @csrf_exempt

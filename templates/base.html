@@ -42,7 +42,19 @@
     <span class="header-span"></span>
 
     <!-- Main Header -->
-    {% include 'main-header.html' %}
+    {% if intro %}
+        <header class="main-header header-style-two">
+            <div class="main-box">
+                <div class="auto-container clearfix">
+                    <div class="logo-box">
+                        <div class="logo"><a href="/"><img src="{% static 'images/logo.png' %}" alt="" title="OpenInfra"></a></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    {% else %}
+        {% include 'main-header.html' %}
+    {% endif %}
 
     <!-- content -->
 

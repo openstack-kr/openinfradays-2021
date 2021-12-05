@@ -17,12 +17,10 @@
 
             <div class="btn-box">
                 <a href="/schedule/sponsornight" class="theme-btn btn-style-three"><span class="btn-title">후원사의 밤 알아보기</span></a>
+                {%  if not request.user.is_authenticated %}
+                    <a href="/login" class="theme-btn btn-style-three"><span class="btn-title">참가 신청</span></a>
+                {% endif %}
             </div>
-            {%  if not request.user.is_authenticated %}
-            <div class="btn-box">
-                <a href="/login" class="theme-btn btn-style-three"><span class="btn-title">참가 신청</span></a>
-            </div>
-            {% endif %}
 
          </div>
     </section>
@@ -85,7 +83,7 @@
                         <ul class="accordion-box">
                             <!--Block-->
                             <li class="accordion block wow fadeInUp">
-                                <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>세션은 언제 볼 수 있나요?</div>
+                                <div class="acc-btn"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>발표는 언제 볼 수 있나요?</div>
                                 <div class="acc-content">
                                     <div class="content">
                                         <div class="text">모든 세션은 배정된 날짜의 오전 10시부터 다음날 오전 9시까지 발표 소개 페이지에서 시청 가능합니다.<br> 예) 8일에 배정된 세션은 8일 오전 10시 ~ 9일 오전 9시까지 시청 가능</div>
@@ -109,10 +107,18 @@
                         <ul class="accordion-box">
                             <!--Block-->
                             <li class="accordion block active-block wow fadeInUp">
+                                <div class="acc-btn active"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>발표는 어떻게 보나요?</div>
+                                <div class="acc-content">
+                                    <div class="content">
+                                        <div class="text">발표가 공개되는 날, 로그인 후 발표 상세 페이지에서 발표를 볼 수 있습니다.</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="accordion block active-block wow fadeInUp">
                                 <div class="acc-btn active"><div class="icon-outer"><span class="icon icon-plus fa fa-angle-down"></span> </div>발표 다시보기가 가능한가요?</div>
                                 <div class="acc-content">
                                     <div class="content">
-                                        <div class="text">컨퍼런스가 끝난 다음날 12월 10일부터 모든 발표의 다시보기가 홈페이지를 통해 제공됩니다.</div>
+                                        <div class="text">컨퍼런스가 끝난 다음날인 12월 10일부터 모든 발표의 다시보기가 홈페이지를 통해 제공됩니다.</div>
                                     </div>
                                 </div>
                             </li>
