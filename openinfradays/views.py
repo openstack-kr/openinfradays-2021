@@ -167,7 +167,8 @@ def session_detail(request, session_id):
          ( now.day == (session.open_date.day + 1) and now.hour < 10)):
         release = True
 
-    if now.month == session.open_date.month and now.day >= 7 and session.session_type == "Keynote":
+    if now.month == session.open_date.month and now.day >= 7 and \
+            ( session.session_type == "Keynote" or session.session_type == 'Community'):
         release = True
 
     context = {'session': session, 'videos': videos, 'release': release}

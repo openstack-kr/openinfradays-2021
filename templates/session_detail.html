@@ -51,7 +51,7 @@
                             <div class="col-lg-4">
                                 <div class="speaker-session-info">
                                     <h5>Schedule</h5>
-                                    {% if session.session_type == 'Keynote' %}
+                                    {% if session.session_type == 'Keynote' or session.session_type == 'Community' %}
                                         <h6>All Day</h6>
                                     {% else %}
                                         <h6>{{ session.open_date }}</h6>
