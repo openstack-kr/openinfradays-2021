@@ -46,7 +46,8 @@ class TechSession(models.Model):
     open_date = models.DateField(default='2021-12-07')
 
     session_type = models.CharField(max_length=20,
-                                    choices=[('Keynote', 'Keynote'), ('Sponsor', 'Sponsor'), ('Tech', "Tech")],
+                                    choices=[('Keynote', 'Keynote'), ('Sponsor', 'Sponsor'), ('Tech', "Tech"),
+                                             ('Community', "Community")],
                                     default='Tech')
     qna_enable = models.BooleanField(default=False, blank=True)
     qna_date = models.DateField(blank=True, default='2021-12-07')

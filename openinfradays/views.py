@@ -179,11 +179,12 @@ def session_detail(request, session_id):
 def session_schedule(request):
     keynote = TechSession.objects.filter(session_type='Keynote')
     tech_session = TechSession.objects.filter(Q(session_type='Tech') | Q(session_type='Sponsor'))
+    community = TechSession.objects.filter(session_type='Community')
     day1 = tech_session.filter(open_date='2021-12-07')
     day2 = tech_session.filter(open_date='2021-12-08')
     day3 = tech_session.filter(open_date='2021-12-09')
     menu = make_menu_context('schedule')
-    context = {'keynote': keynote, 'day1': day1, 'day2': day2, 'day3': day3}
+    context = {'keynote': keynote, 'day1': day1, 'day2': day2, 'day3': day3, 'community': community}
     return render(request, 'sessions.html', {**menu, **context})
 
 
