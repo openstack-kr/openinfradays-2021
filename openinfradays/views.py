@@ -57,6 +57,7 @@ def lobby(request):
     menu = make_menu_context('index')
     bof = Bof.objects.filter(bof_date=date.today()).first()
     sn = SponsorNight.objects.filter(event_date=date.today()).first()
+    qna = TechSession.objects.filter(qna_date=date.today())
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
@@ -64,7 +65,7 @@ def lobby(request):
     keynote_session = TechSession.objects.filter(session_type='Keynote')
     sponsor_session = TechSession.objects.filter(session_type='Sponsor')
     context = {'bof': bof, 'sn': sn, 'diamond': diamond, 'sapphire': sapphire,
-               'gold': gold, 'media': media,
+               'gold': gold, 'media': media, 'qna': qna,
                'keynote': keynote_session, 'sponsor': sponsor_session,}
     return render(request, 'lobby.html', {**menu, **context})
 

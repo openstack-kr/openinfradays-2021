@@ -50,6 +50,26 @@
                 </div>
             </div>
             <div class="sec-title">
+                <h3>발표 Q&A 일정</h3>
+            </div>
+            <div class="row">
+                {% for k in qna %}
+                <div class="speaker-block-two col-lg-4 col-md-6 col-sm-6 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="info-box">
+                            <h4 class="name"><a href="/session/{{ k.id }}">{{ k.title }}</a></h4>
+                            <!--<span class="designation">Event Manager</span>-->
+                        </div>
+                        <div class="image-box">
+                            <figure class="image"><a href="/session/{{ k.id }}"><img src="{{ k.speaker.profile_img.url }}" alt=""></a></figure>
+                            <h4>{{ k.speaker.name }}</h4>
+                            <h5>{{ k.qna_time }}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="sec-title">
                 <h2>실시간 방송 (후원사 광고) + a</h2>
             </div>
             <div class="row" id="video_area" name="video_area">
