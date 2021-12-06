@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
 from .models import Sponsor, TechSession, Speaker, VirtualBooth,\
-    Profile, AccessLog, SponsorNight, Bof, OnetimeToken
+    Profile, AccessLog, SponsorNight, Bof, OnetimeToken, AdVideo
 
 
 class AccessLogAdmin(admin.ModelAdmin):
@@ -65,6 +65,10 @@ class OneTimeTokenAdmin(admin.ModelAdmin):
     list_display = ('token', 'expired', 'expire_at')
 
 
+class AdVideoAdmin(admin.ModelAdmin):
+    list_display = ('url',)
+
+
 admin.site.register(Sponsor, SponsorAdmin)
 admin.site.register(TechSession, TechSessionAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
@@ -73,5 +77,6 @@ admin.site.register(AccessLog, AccessLogAdmin)
 admin.site.register(SponsorNight, SponsorNightAdmin)
 admin.site.register(Bof, BofAdmin)
 admin.site.register(OnetimeToken, OneTimeTokenAdmin)
+admin.site.register(AdVideo, AdVideoAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

@@ -1,4 +1,5 @@
 import json
+import random
 import requests
 import uuid
 
@@ -14,7 +15,7 @@ from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Sponsor, TechSession, VirtualBooth, \
-    AccessLog, SponsorNight, Bof
+    AccessLog, SponsorNight, Bof, AdVideo
 
 
 def agreement_required(function):
@@ -172,16 +173,22 @@ def virtualbooth_detail(request, virtualbooth_id):
 @logging
 def session_detail(request, session_id):
     session = TechSession.objects.get(id=session_id)
+    ads = AdVideo.objects.all()
     menu = make_menu_context('schedule')
-    videos = []
-    if session.ad1_url != '':
-        videos.append(session.ad1_url)
-    if session.ad2_url != '':
-        videos.append(session.ad2_url)
-    videos.append(session.video_url)
+    ads_link = []
+    ad1_url = ''
+    ad2_url = ''
+    for ad in ads:
+        ads_link.append(ad.url)
+
+    for i in range(10):
+        random.shuffle(ads_link)
+
+    if len(ads_link) > 2:
+        ad1_url = ads_link[0]
+        ad2_url = ads_link[1]
 
     now = datetime.now()
-
     release = False
     if now.month == session.open_date.month and \
         (( now.day == session.open_date.day and now.hour >= 10 ) or
@@ -195,7 +202,7 @@ def session_detail(request, session_id):
     if request.user.is_staff:
         release = True
 
-    context = {'session': session, 'videos': videos, 'release': release}
+    context = {'session': session, 'ad1_url': ad1_url, 'ad2_url': ad2_url, 'release': release}
     return render(request, 'session_detail.html', {**menu, **context})
 
 

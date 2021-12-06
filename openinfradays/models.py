@@ -143,3 +143,7 @@ class Bof(models.Model):
     bof_date = models.DateField(default='2021-12-07')
     bof_time = models.CharField(max_length=30, default='')
     content = models.TextField(max_length=1000, default='')
+
+
+class AdVideo(models.Model):
+    url = models.CharField(max_length=100, default='')

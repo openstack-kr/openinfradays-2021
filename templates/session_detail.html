@@ -6,9 +6,9 @@
 <section class="page-title">
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
-        {% if release and session.slide_url and request.user.is_authenticated%}
+        {% if release and session.slide and request.user.is_authenticated %}
          <div class="btn-box">
-                <a href="{{ session.slide_url.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
+                <a href="{{ session.slide.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
          </div>
         {% endif %}
     </div>
@@ -76,6 +76,7 @@
             </div>
         </div>
         <div class="row" id="video_area" name="video_area">
+            <h2>후원사 홍보 영상이 재생된 후, 발표 영상이 재생됩니다.</h2>
             {%  if not request.user.is_authenticated %}
                 <h2>발표 영상을 보기 위해, 로그인해주시기 바랍니다.</h2>
             {% endif %}
@@ -88,12 +89,8 @@
 new ncplayer('video_area', {
               autostart: false,
               playlist: [
-                  {% if session.ad1_url != '' %}
-                  {file: "{{ session.ad1_url }}" },
-                  {% endif %}
-                  {% if session.ad2_url != '' %}
-                  {file: "{{ session.ad2_url }}" },
-                  {% endif %}
+                  {file: "{{ ad1_url }}" },
+                  {file: "{{ ad2_url }}" },
                   {file: "{{ session.video_url}}" }
                   ],
             });
