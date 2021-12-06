@@ -44,6 +44,7 @@ urlpatterns = [
     path('login/onetime', sns_login.login_with_onetime),
     path('login/onetime/<str:token>', sns_login.onetime_login_check),
     path('bof/<int:bof_id>', views.bof_detail),
+    path('event', views.event),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -22,7 +22,7 @@
                 <!-- Feature Block -->
 
                 <!-- Feature Block -->
-                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+                <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
                     <div class="inner-box">
                         <div class="icon-box"><span class="icon flaticon-diamond-1"></span></div>
                         <h4><a href="/program/sponsornight">[후원사의 밤] {{ sn.sponsor.name_ko }}</a></h4>
@@ -32,20 +32,28 @@
                 </div>
 
                 <!-- Feature Block -->
-                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+                <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
                     <div class="inner-box">
                         <div class="icon-box"><span class="icon flaticon-group-2"></span></div>
-                        <h4><a href="/program/bof">[BoF] {{ bof.title }}</a></h4>
+                        <h4><a href="/bof/{{ bof.id }}">[BoF] {{ bof.title }}</a></h4>
                         <div class="text">진행 시간 : {{ bof.bof_date.month  }}월 {{ bof.bof_date.day }}일 {{ bof.bof_time }}</div>
                         <div class="link-box"><a href="/bof/{{ bof.id }}" class="theme-btn">Read More</a></div>
                     </div>
                 </div>
-                <div class="feature-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
                     <div class="inner-box">
                         <div class="icon-box"><span class="icon flaticon-play-button-3"></span></div>
-                        <h4><a href="/schedule/session">가상 부스</a></h4>
+                        <h4><a href="/virtualbooth">가상 부스</a></h4>
                         <div class="text">가상 부스를 통해 후원사의 다양한 서비스를 경험해보세요</div>
                         <div class="link-box"><a href="/virtualbooth" class="theme-btn">Read More</a></div>
+                    </div>
+                </div>
+                <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="icon-box"><span class="icon flaticon-gift"></span></div>
+                        <h4><a href="/event">경품 이벤트</a></h4>
+                        <div class="text">이벤트에 참여해 경품을 받아가세요</div>
+                        <div class="link-box"><a href="/event" class="theme-btn">Read More</a></div>
                     </div>
                 </div>
             </div>
@@ -61,10 +69,15 @@
                             <!--<span class="designation">Event Manager</span>-->
                         </div>
                         <div class="image-box">
-                            <figure class="image"><a href="/session/{{ k.id }}"><img src="{{ k.speaker.profile_img.url }}" alt=""></a></figure>
+                            {% if s.speaker.profile_img %}
+                            <figure class="thumb"><img src="{{ k.speaker.profile_img.url }}" alt=""></figure>
+                            {% else %}
+                            <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                            {% endif %}
                             <h4>{{ k.speaker.name }}</h4>
                             <h5>{{ k.qna_time }}</h5>
                         </div>
+
                     </div>
                 </div>
                 {% endfor %}

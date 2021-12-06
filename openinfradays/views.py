@@ -57,7 +57,7 @@ def lobby(request):
     menu = make_menu_context('index')
     bof = Bof.objects.filter(bof_date=date.today()).first()
     sn = SponsorNight.objects.filter(event_date=date.today()).first()
-    qna = TechSession.objects.filter(qna_date=date.today())
+    qna = TechSession.objects.filter(qna_date=date.today(), qna_enable=True)
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
@@ -255,6 +255,12 @@ def bof_introduce(request):
     context = {'diamond': diamond}
     menu = make_menu_context('program')
     return render(request, 'bof_introduce.html', {**menu, **context})
+
+
+@logging
+@agreement_required
+def event(request):
+    return render(request, 'event.html')
 
 
 @agreement_required
