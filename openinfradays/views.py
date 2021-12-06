@@ -2,7 +2,7 @@ import json
 import requests
 import uuid
 
-from datetime import datetime
+from datetime import datetime, date
 
 from django.contrib import auth
 from django.contrib.auth import get_user_model, login
@@ -52,9 +52,30 @@ def make_menu_context(current=None):
     return context
 
 
+def lobby(request):
+    menu = make_menu_context('index')
+    bof = Bof.objects.filter(bof_date=date.today()).first()
+    sn = SponsorNight.objects.filter(event_date=date.today()).first()
+    diamond = Sponsor.objects.filter(level='Diamond')
+    sapphire = Sponsor.objects.filter(level='Sapphire')
+    gold = Sponsor.objects.filter(level='Gold')
+    media = Sponsor.objects.filter(level='Media')
+    keynote_session = TechSession.objects.filter(session_type='Keynote')
+    sponsor_session = TechSession.objects.filter(session_type='Sponsor')
+    context = {'bof': bof, 'sn': sn, 'diamond': diamond, 'sapphire': sapphire,
+               'gold': gold, 'media': media,
+               'keynote': keynote_session, 'sponsor': sponsor_session,}
+    return render(request, 'lobby.html', {**menu, **context})
+
+
 @agreement_required
 @logging
 def index(request):
+    event_date = settings.EVENT_DATE
+    now = datetime.now()
+    if now > event_date:
+        return lobby(request)
+
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
