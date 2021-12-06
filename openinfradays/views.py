@@ -171,6 +171,9 @@ def session_detail(request, session_id):
             ( session.session_type == "Keynote" or session.session_type == 'Community'):
         release = True
 
+    if request.user.is_staff:
+        release = True
+
     context = {'session': session, 'videos': videos, 'release': release}
     return render(request, 'session_detail.html', {**menu, **context})
 
