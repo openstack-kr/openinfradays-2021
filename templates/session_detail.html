@@ -6,7 +6,7 @@
 <section class="page-title">
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
-        {% if release and session.slide_url %}
+        {% if release and session.slide_url and request.user.is_authenticated%}
          <div class="btn-box">
                 <a href="{{ session.slide_url.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
          </div>
@@ -76,13 +76,15 @@
             </div>
         </div>
         <div class="row" id="video_area" name="video_area">
-
+            {%  if not request.user.is_authenticated %}
+                <h2>발표 영상을 보기 위해, 로그인해주시기 바랍니다.</h2>
+            {% endif %}
         </div>
     </div>
 </section>
 
 <script>
-{% if release %}
+{% if release and request.user.is_authenticated%}
 new ncplayer('video_area', {
               autostart: false,
               playlist: [
