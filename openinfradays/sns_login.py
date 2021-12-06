@@ -15,6 +15,7 @@ from django.shortcuts import render
 
 from .models import Profile, OnetimeToken
 from .views import make_menu_context
+from . import get_client_ip
 
 
 UserModel = get_user_model()
@@ -93,7 +94,8 @@ def login_with_onetime(request):
     base_domain = settings.BASE_DOMAIN
 
     token = uuid.uuid4().hex
-    ott = OnetimeToken(user=user, token=token)
+    client_ip = get_client_ip(request)
+    ott = OnetimeToken(user=user, token=token, request_ip=client_ip)
     ott.save()
 
     response = requests.post(
@@ -133,6 +135,10 @@ def onetime_login_check(request, token):
 
     now = timezone.now()
     if ott.expired or now > ott.expire_at:
+        return render(request, 'onetime_login_error.html')
+    client_ip = get_client_ip(request)
+
+    if client_ip != ott.request_ip:
         return render(request, 'onetime_login_error.html')
 
     user = ott.user

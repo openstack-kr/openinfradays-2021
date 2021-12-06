@@ -114,6 +114,7 @@ class OnetimeToken(models.Model):
     token = models.CharField(max_length=100, default='', blank=True)
     expired = models.BooleanField(default=False)
     error_msg = models.CharField(max_length=10000, default='', blank=True)
+    request_ip = models.CharField(max_length=100, default='', blank=True)
     access_time = models.DateTimeField(null=True)
     expire_at = models.DateTimeField(default=datetime.now() + timedelta(days=1))
 
