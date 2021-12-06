@@ -3,6 +3,8 @@ import requests
 import json
 import uuid
 
+from datetime import datetime
+
 from django.contrib.auth import get_user_model, login
 from django.conf import settings
 from django.shortcuts import redirect
@@ -125,7 +127,8 @@ def login_with_onetime(request):
 def onetime_login_check(request, token):
     try:
         ott = OnetimeToken.objects.get(token=token)
-    except Exception:
+    except Exception as e:
+        print(e)
         return render(request, 'onetime_login_error.html')
 
     now = timezone.now()
@@ -134,6 +137,7 @@ def onetime_login_check(request, token):
 
     user = ott.user
     ott.expired = True
+    ott.access_time = datetime.now()
     ott.save()
     login(request, user)
     return redirect('/')
