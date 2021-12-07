@@ -21,7 +21,7 @@ class SponsorAdmin(admin.ModelAdmin):
 
 
 class TechSessionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'get_speaker', 'session_type', 'open_date')
+    list_display = ('title', 'get_speaker', 'session_type', 'open_date', 'video_url')
 
     @admin.display(ordering='speaker__name', description='Speaker')
     def get_speaker(self, obj):
@@ -105,8 +105,3 @@ admin.site.register(OnetimeToken, OneTimeTokenAdmin)
 admin.site.register(AdVideo, AdVideoAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-
-
-
-
-
