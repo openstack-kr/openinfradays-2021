@@ -70,10 +70,10 @@
                             <!--<span class="designation">Event Manager</span>-->
                         </div>
                         <div class="image-box">
-                            {% if s.speaker.profile_img %}
-                            <figure class="thumb"><img src="{{ k.speaker.profile_img.url }}" alt=""></figure>
+                            {% if k.speaker.profile_img %}
+                            <figure class="imgae"><img src="{{ k.speaker.profile_img.url }}" alt=""></figure>
                             {% else %}
-                            <figure class="thumb"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                            <figure class="imgae"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
                             {% endif %}
                             <h4>{{ k.speaker.name }}</h4>
                             <h5>{{ k.qna_time }}</h5>
