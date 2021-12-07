@@ -57,16 +57,41 @@ class ProfileInline(admin.StackedInline):
     can_delete = False
 
 
-class UserAdmin(BaseUserAdmin):
-    inlines = (ProfileInline, )
-
-
 class OneTimeTokenAdmin(admin.ModelAdmin):
     list_display = ('token', 'expired', 'expire_at')
 
 
 class AdVideoAdmin(admin.ModelAdmin):
     list_display = ('url',)
+
+
+def export_to_csv(modeladmin, request, queryset):
+    from django.http import HttpResponse
+    import csv, datetime
+
+    opts = modeladmin.model._meta
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;' 'filename={}.csv'.format(opts.verbose_name)
+    writer = csv.writer(response)
+    fields = [field for field in opts.get_fields() if not field.many_to_many and not field.one_to_many]
+    # Write a first row with header information
+    title = ['name', 'email']
+    writer.writerow(title)
+    # Write data rows
+    for u in User.objects.all():
+        data_row = [u.first_name, u.email]
+        writer.writerow(data_row)
+
+    return response
+
+
+class UserAdmin(BaseUserAdmin):
+    inlines = (ProfileInline, )
+
+    actions = [export_to_csv]
+
+
+export_to_csv.short_description = 'Export to CSV'  #short description
 
 
 admin.site.register(Sponsor, SponsorAdmin)
@@ -80,3 +105,8 @@ admin.site.register(OnetimeToken, OneTimeTokenAdmin)
 admin.site.register(AdVideo, AdVideoAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+
+
+
+
