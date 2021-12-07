@@ -38,7 +38,7 @@ def logging(function):
                 return function(request, *args, **kwargs)
             user = request.user
         url = request.path_info
-        acl = AccessLog(user=user, path=url)
+        acl = AccessLog(user=user, path=url, access_at=datetime.now())
         acl.save()
         return function(request, *args, **kwargs)
     return wrap
