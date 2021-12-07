@@ -214,7 +214,11 @@
                             <!--<span class="designation">Event Manager</span>-->
                         </div>
                         <div class="image-box">
-                            <figure class="image"><a href="/session/{{ s.id }}"><img src="{{ s.speaker.profile_img.url }}" alt=""></a></figure>
+                            {% if s.speaker.profile_img %}
+                                <figure class="image"><a href="/session/{{ s.id }}"><img src="{{ s.speaker.profile_img.url }}" alt=""></a></figure>
+                            {% else %}
+                                <figure class="image"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                            {% endif %}
                             <h4>{{ s.speaker.name }}</h4>
                         </div>
                         <div class="social-box">

@@ -3,7 +3,7 @@ import requests
 import json
 import uuid
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model, login
 from django.conf import settings
@@ -95,7 +95,8 @@ def login_with_onetime(request):
 
     token = uuid.uuid4().hex
     client_ip = get_client_ip(request)
-    ott = OnetimeToken(user=user, token=token, request_ip=client_ip)
+    expire = datetime.now() + timedelta(days=1)
+    ott = OnetimeToken(user=user, token=token, request_ip=client_ip, expire_at=expire)
     ott.save()
 
     response = requests.post(
