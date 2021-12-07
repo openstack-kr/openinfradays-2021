@@ -71,9 +71,9 @@
                         </div>
                         <div class="image-box">
                             {% if k.speaker.profile_img %}
-                            <figure class="imgae"><img src="{{ k.speaker.profile_img.url }}" alt=""></figure>
+                            <figure class="image"><img src="{{ k.speaker.profile_img.url }}" alt=""></figure>
                             {% else %}
-                            <figure class="imgae"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
+                            <figure class="image"><img src="{% static 'images/empty_profile.png' %}" alt=""></figure>
                             {% endif %}
                             <h4>{{ k.speaker.name }}</h4>
                             <h5>{{ k.qna_time }}</h5>
