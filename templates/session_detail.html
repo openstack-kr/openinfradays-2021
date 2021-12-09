@@ -7,7 +7,9 @@
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
          <div class="btn-box">
+             {% if session.slide %}
                 <a href="{{ session.slide.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
+             {% endif %}
          </div>
     </div>
 </section>
