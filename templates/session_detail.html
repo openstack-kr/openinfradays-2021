@@ -6,11 +6,9 @@
 <section class="page-title">
     <div class="auto-container">
         <h1 style="color: #000000">{{ session.title }}</h1>
-        {% if release and session.slide and request.user.is_authenticated %}
          <div class="btn-box">
                 <a href="{{ session.slide.url }}" class="theme-btn btn-style-one"><span class="btn-title">Download Slide</span></a>
          </div>
-        {% endif %}
     </div>
 </section>
 <!--End Page Title-->
@@ -28,13 +26,13 @@
                     {% endif %}
                     <ul class="social-icon-two social-icon-colored text-center">
                         {% if session.speaker.facebook != '' %}
-                        <li><a href="https://www.facebook.com/openinfradev"><i class="fa fa-facebook-f fa-2x"></i></a></li>
+                        <li><a href="{{ session.speaker.facebook }}"><i class="fa fa-facebook-f fa-2x"></i></a></li>
                         {% endif %}
                         {% if session.speaker.twitter != '' %}
-                        <li><a href="https://twitter.com/openinfradev"><i class="fa fa-twitter fa-2x"></i></a></li>
+                        <li><a href="{{ session.speaker.twitter }}"><i class="fa fa-twitter fa-2x"></i></a></li>
                         {% endif %}
                         {% if session.speaker.blog != '' %}
-                        <li><a href="https://openinfra.dev"><i class="fa fa-home fa-2x"></i></a></li>
+                        <li><a href="{{ session.speaker.blog }}"><i class="fa fa-home fa-2x"></i></a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -64,7 +62,7 @@
                                     <h5>Q&A with speaker</h5>
                                     <h6>{{ session.qna_date }}</h6>
                                     <span> {{ session.qna_time}}</span>
-				    <p> <a href="https://gather.town/app/SOxabOWFw4zC28ux/openinfradays-2021">{{ session.qna_location }} </a></p>
+				    <p> {{ session.qna_location }}</p>
                                 </div>
                             </div>
                             {% endif %}
@@ -76,10 +74,6 @@
             </div>
         </div>
         <div class="row" id="video_area" name="video_area">
-            <h2>후원사 홍보 영상이 재생된 후, 발표 영상이 재생됩니다.</h2>
-            {%  if not request.user.is_authenticated %}
-                <h2>발표 영상을 보기 위해, 로그인해주시기 바랍니다.</h2>
-            {% endif %}
         </div>
     </div>
 </section>
@@ -89,8 +83,6 @@
 new ncplayer('video_area', {
               autostart: false,
               playlist: [
-                  {file: "{{ ad1_url }}" },
-                  {file: "{{ ad2_url }}" },
                   {file: "{{ session.video_url}}" }
                   ],
             });

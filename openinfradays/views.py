@@ -73,11 +73,6 @@ def lobby(request):
 @agreement_required
 @logging
 def index(request):
-    event_date = settings.EVENT_DATE
-    now = datetime.now()
-    if now > event_date:
-        return lobby(request)
-
     diamond = Sponsor.objects.filter(level='Diamond')
     sapphire = Sponsor.objects.filter(level='Sapphire')
     gold = Sponsor.objects.filter(level='Gold')
