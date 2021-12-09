@@ -75,11 +75,11 @@ def export_to_csv(modeladmin, request, queryset):
     writer = csv.writer(response)
     fields = [field for field in opts.get_fields() if not field.many_to_many and not field.one_to_many]
     # Write a first row with header information
-    title = ['name', 'email']
+    title = ['name', 'email', 'company', 'job']
     writer.writerow(title)
     # Write data rows
     for u in User.objects.all():
-        data_row = [u.first_name, u.email]
+        data_row = [u.first_name, u.email, u.profile.company, u.profile.job]
         writer.writerow(data_row)
 
     return response
