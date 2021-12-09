@@ -40,12 +40,14 @@
 
                 <!-- Feature Block -->
                 <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+                    {% for bof in bofs %}
                     <div class="inner-box">
                         <div class="icon-box"><span class="icon flaticon-group-2"></span></div>
                         <h4><a href="/bof/{{ bof.id }}">[BoF] {{ bof.title }}</a></h4>
                         <div class="text">진행 시간 : {{ bof.bof_date.month  }}월 {{ bof.bof_date.day }}일 {{ bof.bof_time }}</div>
                         <div class="link-box"><a href="/bof/{{ bof.id }}" class="theme-btn">Read More</a></div>
                     </div>
+                    {% endfor %}
                 </div>
                 <div class="feature-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
                     <div class="inner-box">
