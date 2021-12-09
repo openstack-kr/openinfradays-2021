@@ -81,14 +81,12 @@
 </section>
 
 <script>
-{% if release and request.user.is_authenticated%}
 new ncplayer('video_area', {
               autostart: false,
               playlist: [
                   {file: "{{ session.video_url}}" }
                   ],
             });
-{% endif %}
 </script>
 <!--End Speker Detail -->
 {% endblock %}
