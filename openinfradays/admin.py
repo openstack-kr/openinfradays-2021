@@ -67,7 +67,7 @@ class AdVideoAdmin(admin.ModelAdmin):
 
 def export_to_csv(modeladmin, request, queryset):
     from django.http import HttpResponse
-    import csv, datetime
+    import csv
 
     opts = modeladmin.model._meta
     response = HttpResponse(content_type='text/csv')
@@ -85,10 +85,30 @@ def export_to_csv(modeladmin, request, queryset):
     return response
 
 
+def export_naver_agree(modeladmin, request, queryset):
+    from django.http import HttpResponse
+    import csv
+
+    opts = modeladmin.model._meta
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;' 'filename={}.csv'.format(opts.verbose_name)
+    writer = csv.writer(response)
+    title = ['name', 'email', 'naver_cloud_form']
+    writer.writerow(title)
+
+    for p in Profile.objects.filter(is_check_navercloud=True):
+        u = p.user
+        name = u.first_name
+        email = u.email
+        apply_form = p.naver_cloud_form
+        data_row = [name, email, apply_form]
+        writer.writerow(data_row)
+    return response
+
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline, )
 
-    actions = [export_to_csv]
+    actions = [export_to_csv, export_naver_agree]
 
 
 export_to_csv.short_description = 'Export to CSV'  #short description
